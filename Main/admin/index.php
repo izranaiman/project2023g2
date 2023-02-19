@@ -10,7 +10,7 @@
         
     <title>Dashboard</title>
     <style>
-        .dashbord-tables{
+       .dashbord-tables{
             animation: transitionIn-Y-over 0.5s;
         }
         .filter-container{
@@ -33,6 +33,8 @@
     if(isset($_SESSION["user"])){
         if(($_SESSION["user"])=="" or $_SESSION['usertype']!='a'){
             header("location: ../login.php");
+        }else{
+            $useremail=$_SESSION["user"];
         }
 
     }else{
@@ -42,7 +44,11 @@
 
     //import database
     include("../connection.php");
+    $userrow = $database->query("select * from admin where aemail='$useremail'");
+    $userfetch=$userrow->fetch_assoc();
+    $useremail= $userfetch["aemail"];
 
+    //echo $useremail;
     
     ?>
     <div class="container">
@@ -57,7 +63,7 @@
                                 </td>
                                 <td style="padding:0px;margin:0px;">
                                     <p class="profile-title">Administrator</p>
-                                    <p class="profile-subtitle">admin@edoc.com</p>
+                                    <p class="profile-subtitle"><?php echo substr($useremail,0,22)  ?></p>
                                 </td>
                             </tr>
                             <tr>
@@ -73,6 +79,12 @@
                         <a href="index.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">Dashboard</p></a></div></a>
                     </td>
               
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-settings">
+                        <a href="settings.php" class="non-style-link-menu"><div><p class="menu-text">Settings</p></a></div>
+                    </td>
+                </tr>
+                
             </table>
         </div>
         <div class="dash-body" style="margin-top: 15px">
@@ -80,32 +92,12 @@
                         
                         <tr >
                             
-                            <td colspan="2" class="nav-bar" >
-                                
-                                <form action="doctors.php" method="post" class="header-search">
-        
-                                    <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email" list="doctors">&nbsp;&nbsp;
-                                    
-                                    <?php
-                                        echo '<datalist id="doctors">';
-                                        $list11 = $database->query("select  docname,docemail from  doctor;");
-        
-                                        for ($y=0;$y<$list11->num_rows;$y++){
-                                            $row00=$list11->fetch_assoc();
-                                            $d=$row00["docname"];
-                                            $c=$row00["docemail"];
-                                            echo "<option value='$d'><br/>";
-                                            echo "<option value='$c'><br/>";
-                                        };
-        
-                                    echo ' </datalist>';
-                                    ?>
-                                    
-                               
-                                    <input type="Submit" value="Search" class="login-btn btn-primary-soft btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
-                                
-                                </form>
-                                
+                            <td colspan="1" class="nav-bar" >
+                            <p style="font-size: 23px;padding-left:12px;font-weight: 600;margin-left:20px;">     Dashboard</p>
+                          
+                            </td>
+                            <td width="25%">
+
                             </td>
                             <td width="15%">
                                 <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
@@ -134,11 +126,37 @@
         
         
                         </tr>
-                
-                        </table>
-                        </center>
-                        </td>
+                <tr>
+                    <td colspan="4" >
+                        
+              
+                    
+                </td>
                 </tr>
+                <tr>
+                    <td colspan="4">
+                        <table border="0" width="100%"">
+                            <tr>
+                                <td width="50%">
+
+                                    
+
+
+
+
+                                   
+
+
+
+
+
+
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                <tr>
             </table>
         </div>
     </div>

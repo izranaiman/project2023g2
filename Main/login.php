@@ -176,6 +176,14 @@
                     <br><br><br>
                 </td>
             </tr>
+		<tr>
+                <td>
+                    <br>
+                    <label for="" class="sub-text" style="font-weight: 280;">Forgot Password&#63; </label>
+                    <a href="forgot-password.php" class="hover-link1 non-style-link">Here</a>
+                    <br><br><br>
+                </td>
+            </tr>
                         
                         
     
