@@ -78,6 +78,17 @@
                     <td class="menu-btn menu-icon-dashbord menu-active menu-icon-dashbord-active" >
                         <a href="index.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">Dashboard</p></a></div></a>
                     </td>
+                    </tr>
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-schedule">
+                        <a href="schedule.php" class="non-style-link-menu"><div><p class="menu-text">Schedule</p></div></a>
+                    </td>
+                </tr>
+                 <tr class="menu-row">
+                    <td class="menu-btn menu-icon-appoinment">
+                        <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">Appointment</p></a></div>
+                    </td>
+                </tr>
               
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-settings">
