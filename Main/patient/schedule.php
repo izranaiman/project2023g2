@@ -40,6 +40,7 @@
     //import database
     include("../connection.php");
     $sqlmain= "select * from patient where pemail=?";
+    $userrow = $database->query("select * from patient where pemail='$useremail'");
     $stmt = $database->prepare($sqlmain);
     $stmt->bind_param("s",$useremail);
     $stmt->execute();
@@ -86,13 +87,7 @@
                     <td class="menu-btn menu-icon-home " >
                         <a href="index.php" class="non-style-link-menu "><div><p class="menu-text">Home</p></a></div></a>
                     </td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-btn menu-icon-doctor">
-                        <a href="doctors.php" class="non-style-link-menu"><div><p class="menu-text">All Doctors</p></a></div>
-                    </td>
-                </tr>
-                
+                </tr>                
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-session menu-active menu-icon-session-active">
                         <a href="schedule.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">Scheduled Sessions</p></div></a>
