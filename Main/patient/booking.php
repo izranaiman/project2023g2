@@ -41,6 +41,7 @@
     include("../connection.php");
 
     $sqlmain= "select * from patient where pemail=?";
+    $userrow = $database->query("select * from patient where pemail='$useremail'");
     $stmt = $database->prepare($sqlmain);
     $stmt->bind_param("s",$useremail);
     $stmt->execute();
