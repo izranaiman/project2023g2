@@ -74,6 +74,11 @@
                      <a href="index.php" class="non-style-link-menu "><div><p class="menu-text">Dashboard</p></a></div></a>
                  </td>
              </tr>
+              <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-patient">
+                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">My Patients</p></a></div>
+                    </td>
+                </tr>
              <tr class="menu-row">
                  <td class="menu-btn menu-icon-appoinment  ">
                      <a href="appointment.php" class="non-style-link-menu"><div><p class="menu-text">My Appointments</p></a></div>
