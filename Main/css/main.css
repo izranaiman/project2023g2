@@ -393,6 +393,10 @@ input[type=search]:focus {
   background-image: url('../img/icons/home.svg');
 }
 
+.menu-icon-about{
+  background-image: url('../img/icons/about.svg');
+}
+
 
 
 .menu-icon-dashbord:hover,.menu-icon-dashbord-active{
@@ -434,6 +438,12 @@ input[type=search]:focus {
   background-image: url('../img/icons/session-iceblue.svg');
 }
 .menu-icon-home:hover,.menu-icon-home-active{
+  color: var(--primarycolor);
+  
+  background-image: url('../img/icons/home-iceblue.svg');
+}
+
+.menu-icon-about:hover,.menu-icon-about-active{
   color: var(--primarycolor);
   
   background-image: url('../img/icons/home-iceblue.svg');

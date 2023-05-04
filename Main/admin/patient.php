@@ -94,6 +94,11 @@
                         <a href="settings.php" class="non-style-link-menu"><div><p class="menu-text">Settings</p></a></div>
                     </td>
                 </tr>
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-about">
+                        <a href="about.php" class="non-style-link-menu"><div><p class="menu-text">About Us</p></a></div>
+                    </td>
+                </tr>
                 
 
             </table>
@@ -266,7 +271,11 @@
                                         <td >
                                         <div style="display:flex;justify-content: center;">
                                         
-                                        <a href="?action=view&id='.$pid.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
+                                         <a href="?action=edit&id='.$pid.'&error=0" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-edit"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Edit</font></button></a>
+                                        &nbsp;&nbsp;&nbsp;
+                                         <a href="?action=view&id='.$pid.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
+                                       &nbsp;&nbsp;&nbsp;
+                                        <a href="?action=drop&id='.$pid.'&name='.$name.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Remove</font></button></a>
                                        
                                         </div>
                                         </td>
@@ -295,6 +304,28 @@
         
         $id=$_GET["id"];
         $action=$_GET["action"];
+        if($action=='drop'){
+            $nameget=$_GET["name"];
+            echo '
+            <div id="popup1" class="overlay">
+                    <div class="popup">
+                    <center>
+                        <h2>Are you sure?</h2>
+                        <a class="close" href="patient.php">&times;</a>
+                        <div class="content">
+                            You want to delete this record<br>('.substr($nameget,0,40).').
+                            
+                        </div>
+                        <div style="display: flex;justify-content: center;">
+                        <a href="delete-patient.php?id='.$id.'" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
+                        <a href="patient.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;No&nbsp;&nbsp;</font></button></a>
+
+                        </div>
+                    </center>
+            </div>
+            </div>
+            ';
+        }elseif($action=='view'){
             $sqlmain= "select * from patient where pid='$id'";
             $result= $database->query($sqlmain);
             $row=$result->fetch_assoc();
@@ -415,9 +446,172 @@
             </div>
             </div>
             ';
+
+            }elseif($action=='edit'){
+            $sqlmain= "select * from patient where pid='$id'";
+            $result= $database->query($sqlmain);
+            $row=$result->fetch_assoc();
+            $name=$row["pname"];
+            $email=$row["pemail"];
+            $address=$row["paddress"];
+            $nic=$row['pnic'];
+            $tele=$row['ptel'];
+
+            $error_1=$_GET["error"];
+                $errorlist= array(
+                    '1'=>'<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Already have an account for this Email address.</label>',
+                    '2'=>'<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Password Conformation Error! Reconform Password</label>',
+                    '3'=>'<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;"></label>',
+                    '4'=>"",
+                    '0'=>'',
+
+                );
+
+            if($error_1!='4'){
+                    echo '
+                    <div id="popup1" class="overlay">
+                            <div class="popup">
+                            <center>
+                            
+                                <a class="close" href="patient.php">&times;</a> 
+                                <div style="display: flex;justify-content: center;">
+                                <div class="abc">
+                                <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
+                                <tr>
+                                        <td class="label-td" colspan="2">'.
+                                            $errorlist[$error_1]
+                                        .'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit User Account Details.</p>
+                                        User ID : '.$id.' (Auto Generated)<br><br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <form action="edit-patient.php" method="POST" class="add-new-form">
+                                            <label for="Email" class="form-label">Email: </label>
+                                            <input type="hidden" value="'.$id.'" name="id00">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                        <input type="hidden" name="oldemail" value="'.$email.'" >
+                                        <input type="email" name="email" class="input-text" placeholder="Email Address" value="'.$email.'" required><br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td class="label-td" colspan="2">
+                                            <label for="name" class="form-label">Name: </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <input type="text" name="name" class="input-text" placeholder="Doctor Name" value="'.$name.'" required><br>
+                                        </td>
+                                        
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <label for="nic" class="form-label">NIC: </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <input type="text" name="nic" class="input-text" placeholder="NIC Number" value="'.$nic.'" required><br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <label for="Tele" class="form-label">Telephone: </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <input type="tel" name="Tele" class="input-text" placeholder="Telephone Number" value="'.$tele.'" required><br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <label for="spec" class="form-label">Address</label>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                        <input type="text" name="address" class="input-text" placeholder="Address" value="'.$address.'" required><br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <label for="password" class="form-label">Password: </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <input type="password" name="password" class="input-text" placeholder="Defind a Password" required><br>
+                                        </td>
+                                    </tr><tr>
+                                        <td class="label-td" colspan="2">
+                                            <label for="cpassword" class="form-label">Conform Password: </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2">
+                                            <input type="password" name="cpassword" class="input-text" placeholder="Conform Password" required><br>
+                                        </td>
+                                    </tr>
+                                    
+                        
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="reset" value="Reset" class="login-btn btn-primary-soft btn" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        
+                                            <input type="submit" value="Save" class="login-btn btn-primary btn">
+                                        </td>
+                        
+                                    </tr>
+                                
+                                    </form>
+                                    </tr>
+                                </table>
+                                </div>
+                                </div>
+                            </center>
+                            <br><br>
+                    </div>
+                    </div>
+                    ';
+        }else{
+            echo '
+                <div id="popup1" class="overlay">
+                        <div class="popup">
+                        <center>
+                        <br><br><br><br>
+                            <h2>Edit Successfully!</h2>
+                            <a class="close" href="patient.php">&times;</a>
+                            <div class="content">
+                                If You change your email also Please logout and login again with your new email
+                                
+                            </div>
+                            <div style="display: flex;justify-content: center;">
+                            
+                            <a href="patient.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
+                            <a href="../logout.php" class="non-style-link"><button  class="btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;Log out&nbsp;&nbsp;</font></button></a>
+
+                            </div>
+                            <br><br>
+                        </center>
+                </div>
+                </div>
+    ';
         
     };
-
+    }
+    }
 ?>
 </div>
 

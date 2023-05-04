@@ -41,6 +41,7 @@
 
     
     ?>
+
     <div class="container">
         <div class="menu">
             <table class="menu-container" border="0">
@@ -93,6 +94,11 @@
                  <tr class="menu-row" >
                     <td class="menu-btn menu-icon-settings">
                         <a href="settings.php" class="non-style-link-menu"><div><p class="menu-text">Settings</p></a></div>
+                    </td>
+                </tr>
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-about">
+                        <a href="about.php" class="non-style-link-menu"><div><p class="menu-text">About Us</p></a></div>
                     </td>
                 </tr>
                 

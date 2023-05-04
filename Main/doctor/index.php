@@ -107,6 +107,11 @@
                         <a href="settings.php" class="non-style-link-menu"><div><p class="menu-text">Settings</p></a></div>
                     </td>
                 </tr>
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-about">
+                        <a href="about.php" class="non-style-link-menu"><div><p class="menu-text">About Us</p></a></div>
+                    </td>
+                </tr>
                 
             </table>
         </div>
@@ -177,7 +182,7 @@
                             <tr>
                                 <td width="50%">
                                 
-  <center>
+                                <center>
                                         <table class="filter-container" style="border: none;" border="0">
                                             <tr>
                                                 <td colspan="4">
@@ -341,31 +346,6 @@
                                         </table>
                                         </div>
                                         </center>
-
-
-
-
-
-
-
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                <tr>
-            </table>
-        </div>
-    </div>
-
-
-</body>
-</html>
-                                    
-
-
-
-
-                                   
 
 
 

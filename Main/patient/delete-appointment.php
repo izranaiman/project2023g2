@@ -4,11 +4,11 @@
 
     if(isset($_SESSION["user"])){
         if(($_SESSION["user"])=="" or $_SESSION['usertype']!='a'){
-            header("location: ../index.php");
+            header("location: ../patient/index.php");
         }
 
     }else{
-        header("location: ../index.php");
+        header("location: ../patient/index.php");
     }
     
     

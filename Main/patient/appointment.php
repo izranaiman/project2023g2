@@ -1,3 +1,9 @@
+<?php 
+// Include configuration file   
+require_once 'config.php';  
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +23,8 @@
             animation: transitionIn-Y-bottom 0.5s;
         }
 </style>
+
+
 </head>
 <body>
     <?php
@@ -285,7 +293,10 @@
                                                                     Scheduled Date: '.$scheduledate.'<br>Starts: <b>@'.substr($scheduletime,0,5).'</b> (24h)
                                                                 </div>
                                                                 <br>
-                                                                <a href="?action=drop&id='.$appoid.'&title='.$title.'&doc='.$docname.'" ><button  class="login-btn btn-primary-soft btn "  style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Cancel Booking</font></button></a>
+                                                                <a href="?action=drop&id='.$appoid.'&title='.$title.'&doc='.$docname.'" ><button  class="login-btn btn-primary-soft btn "  style="padding-top:11px;padding-bottom:11px;width:50%"><font class="tn-in-text">Cancel Booking</font></button></a>
+                                                                <a href="payment.php" ><button  class="login-btn btn-primary-soft btn "  style="padding-top:11px;padding-bottom:11px;width:50%"><font class="tn-in-text">Pay</font></button></a>
+
+                                                               
                                                         </div>
                                                                 
                                                     </div>
@@ -520,5 +531,70 @@
     ?>
     </div>
 
+    <script>
+                // Set Stripe publishable key to initialize Stripe.js
+                const stripe = Stripe('<?php echo STRIPE_PUBLISHABLE_KEY; ?>');
+
+                // Select payment button
+                const payBtn = document.querySelector("#payButton");
+
+                // Payment request handler
+                payBtn.addEventListener("click", function (evt) {
+                    setLoading(true);
+
+                    createCheckoutSession().then(function (data) {
+                        if(data.sessionId){
+                            stripe.redirectToCheckout({
+                                sessionId: data.sessionId,
+                            }).then(handleResult);
+                        }else{
+                            handleResult(data);
+                        }
+                    });
+                });
+
+
+                 // Create a Checkout Session with the selected product
+                const createCheckoutSession = function (stripe) {
+                    return fetch("payment_init.php", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            createCheckoutSession: 1,
+                        }),
+                    }).then(function (result) {
+                        return result.json();
+                    });
+
+                    // Show a spinner on payment processing
+                    function setLoading(isLoading) {
+                        if (isLoading) {
+                            // Disable the button and show a spinner
+                            payBtn.disabled = true;
+                            document.querySelector("#spinner").classList.remove("hidden");
+                            document.querySelector("#buttonText").classList.add("hidden");
+                        } else {
+                            // Enable the button and hide spinner
+                            payBtn.disabled = false;
+                            document.querySelector("#spinner").classList.add("hidden");
+                            document.querySelector("#buttonText").classList.remove("hidden");
+                        }
+                    }
+                    // Display message
+                function showMessage(messageText) {
+                    const messageContainer = document.querySelector("#paymentResponse");
+	
+                    messageContainer.classList.remove("hidden");
+                    messageContainer.textContent = messageText;
+	
+                    setTimeout(function () {
+                        messageContainer.classList.add("hidden");
+                        messageText.textContent = "";
+                    }, 5000);
+                }
+</script>
+};
 </body>
 </html>
